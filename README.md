@@ -15,7 +15,7 @@ The provided images are based on [GoogleContainerTools/distroless](https://githu
 
 Furthermore, the images *do not* include any optional dependencies distributed with Flink. They also *do not* include the standard Flink shell scripts that are typically used to start Flink JVMs. This keeps the images small in size, the Java classpath clean, and avoids hard to follow control flow during JVM start up.
 
-Check out the [`Dockerfile`](https://github.com/uce/flink-distroless/blob/master/Dockerfile) for more details.
+For more details, check out the [`Dockerfile`](https://github.com/uce/flink-distroless/blob/master/Dockerfile).
 
 #### Debugging
 
@@ -30,7 +30,9 @@ Attach `-debug` to the Docker image tag to get the debug variant of the respecti
 
 ### How to Use
 
-Flink is installed into `/flink`. By default, the entrypoint will configure the JVM classpath to `/flink/lib` (no recursive scanning), configure logging, and allocate 80% of the available memory for the JVM heap (`flink-conf.yaml` is ignored).
+Flink is installed into `/flink`. By default, the entrypoint will configure the JVM classpath to `/flink/lib` (no recursive scanning), configure logging, and allocate 80% of the available memory for the JVM heap using the JVM's container support (`flink-conf.yaml` is ignored).
+
+For more details, check out the [`Dockerfile`](https://github.com/uce/flink-distroless/blob/master/Dockerfile#L37).
 
 #### Bundle Your Dependencies
 
@@ -67,7 +69,7 @@ Since we don't run the Flink shell scripts to start the processes (we actually c
 
 As noted, we don't bundle optional Flink dependencies found in the vanilla distribution of Flink. You have to manually download these dependencies and bundle them with your image. Please [download your desired Flink distribution](https://flink.apache.org/downloads.html) in order to extract your required optional dependencies, such as `FileSystem` implementations (e.g. [S3](https://aws.amazon.com/s3/)) or a particular metrics reporter (e.g. [Prometheus](https://prometheus.io)).
 
-You can run the following command to just dowload the dependencies in `opt` from a Flink release:
+You can run the following command to only dowload the dependencies in `opt` from a Flink release:
 
 ```bash
 FLINK_VERSION=1.8.0
